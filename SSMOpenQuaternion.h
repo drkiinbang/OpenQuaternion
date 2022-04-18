@@ -262,8 +262,8 @@ namespace SSMATICS_EOA
 
 		CSMQuaternion Rotate(const CSMQuaternion P) const
 		{
-			if(P.w != 0)
-				throw CSMQuaternionError(_NOT_POINT_);
+			//if(P.w != 0)
+			//	throw CSMQuaternionError(_NOT_POINT_);
 
 			return Rotate(P.x, P.y, P.z);
 		}
@@ -970,4 +970,24 @@ namespace SSMATICS_EOA
 
 		const double w_threshold;
 	};
+
+	CSMQuaternion rotateArbitraryAxis(const double x, const double y, const double z,
+		const double rx, const double ry, const double rz,
+		const double theta)
+	{
+		CSMQuaternion p(0.0, rx, ry, rz);
+		CSMQuaternion r(0.0, rx, ry, rz);
+		r.Normalize();/// unit quaternion
+
+		const double cost = cos(theta);
+		const double sint = sin(theta);
+
+		SSMATICS_EOA::CSMQuaternion rot;
+		rot.w = cos(theta / 2);
+		rot.x = r.x * sin(theta / 2);
+		rot.y = r.y * sin(theta / 2);
+		rot.z = r.z * sin(theta / 2);
+		//auto q = rot % p % rot.Conjugate();
+		return rot.Rotate(p);
+	}
 }
