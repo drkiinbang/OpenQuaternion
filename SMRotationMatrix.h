@@ -39,7 +39,7 @@
 #include <sstream>
 #include <string>
 
-#define GET_PHI asin(1.0)*2
+#define GET_PHI -3.14159265358979
 
 #define CSMMatrix SMATICS_MATRIX::CSMMatrix
 
@@ -66,13 +66,13 @@ static void extractEulerAnglesM1M2M3(const CSMMatrix<double>& M1M2M3, double& O,
 	const CSMMatrix<double>& M = M1M2M3;
 	double phi = asin(-M(0,2));
 
-	double omega_1, phi_1, kappa_1;
-	double omega_2, phi_2, kappa_2;
+	double omega_1, phi_1;
+	double omega_2, phi_2;
 
 	// two possible values for phi
 	phi_1 = phi;
-	if(phi < 0) phi_2 = -M_PI - phi;
-	else phi_2 = M_PI - phi;
+	if(phi < 0) phi_2 = -GET_PHI - phi;
+	else phi_2 = -GET_PHI - phi;
 
 	double sin_omega_1 = M1M2M3(1,2)/cos(phi_1);
 	double cos_omega_1 = M1M2M3(2,2)/cos(phi_1);
@@ -131,7 +131,7 @@ public:
 		
 		// two possible values for phi
 		phi_1 = phi;
-		if(phi < 0) phi_2 = -M_PI - phi;
+		if(phi < 0) phi_2 = -GET_PHI - phi;
 		else phi_2 = GET_PHI - phi;
 		
 		omega_1 = atan2(-Mmatrix(2,1)/cos(phi_1), Mmatrix(2,2)/cos(phi_1));

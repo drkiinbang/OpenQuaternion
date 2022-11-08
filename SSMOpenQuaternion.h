@@ -417,7 +417,7 @@ namespace SSMATICS_EOA
 		void Normalize()
 		{
 			double norm = Norm();
-			if (0.0 == norm)
+			if (norm < std::numeric_limits<double>::epsilon())
 			{
 				throw CSMQuaternionError(_DIVIDED_ZERO_);
 			}
@@ -971,7 +971,7 @@ namespace SSMATICS_EOA
 		const double w_threshold;
 	};
 
-	CSMQuaternion rotateArbitraryAxis(const double x, const double y, const double z,
+	inline CSMQuaternion rotateArbitraryAxis(const double x, const double y, const double z,
 		const double rx, const double ry, const double rz,
 		const double theta)
 	{
